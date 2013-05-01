@@ -3,7 +3,7 @@ require 'puppet/parameter'
 class Puppet::Parameter::File < Puppet::Parameter
 
   # Meant to be passed as an option to newparam
-  def accept_file_with_content=(bool = true)
+  def accept_file_with_content(bool = true)
     @accept_file_with_content = !!bool
   end
   def accept_file_with_content?
