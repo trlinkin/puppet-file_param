@@ -7,7 +7,7 @@ class Puppet::Parameter::File < Puppet::Parameter
     @accept_file_with_content = !!bool
   end
   def accept_file_with_content?
-    @accpet_file_with_content
+    @accept_file_with_content
   end
 
   def unsafe_validate(value)
