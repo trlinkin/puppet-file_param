@@ -20,19 +20,21 @@ This behavior can be turned off however.
 
 Example
 -------
+```ruby
+require 'puppet/parameter/file'
 
-        require 'puppet/parameter/file'
-
-        Puppet::Type.newtype(:best_example_ever) do
+# Disclaimer: Not best example ever
+Puppet::Type.newtype(:best_example_ever) do
         
-          newparam(:name, :namevar => true)
+  newparam(:name, :namevar => true)
 
-          \# We want a string path, or a File[] that isn't managing content  
-          newparam(:example1, :parent => Puppet::Parameter::File)
+  # We want a string path, or a File[] that isn't managing content  
+  newparam(:example1, :parent => Puppet::Parameter::File)
 
-          \# We don't care if a File[] is managing content
-          newparam(:example2, :parent => Puppet::Parameter::File) do
-            \# This changes the default behaviour to not check File[] for managed content, and just extract the path
-            accept_file_with_content
-          end
-        end
+  # We don't care if a File[] is managing content
+  newparam(:example2, :parent => Puppet::Parameter::File) do
+    # This changes the default behaviour to not check File[] for managed content, and just extract the path
+    accept_file_with_content
+  end
+end
+```
