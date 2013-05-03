@@ -1,6 +1,11 @@
 require 'puppet/parameter'
 
-class Puppet::Parameter::File < Puppet::Parameter
+# forward declarations
+module PuppetX
+  module Parameter; end
+end
+
+class PuppetX::Parameter::File < Puppet::Parameter
 
   # Meant to be passed as an option to newparam
   def accept_file_with_content(bool = true)
