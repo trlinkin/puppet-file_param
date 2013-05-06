@@ -18,7 +18,7 @@ class PuppetX::Parameter::File < Puppet::Parameter
   def unsafe_validate(value)
     fail("#{name} does not accept an array as input") if value.is_a? Array
 
-    if value.is_a? Puppet::Type::File and !accept_managed_file_content?
+    if value.is_a? Puppet::Type::File and !accept_file_with_content?
       fail("#{value} is managing content, #{name} will not overwrite") if value.to_hash[:content] or value.to_hash[:source]
     end
 
