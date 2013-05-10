@@ -21,7 +21,7 @@ class PuppetX::Parameter::File < Puppet::Parameter
     if value.is_a? String
       fail("#{name} must be a fully qualified path") unless absolute_path?(value)
     elsif not value.resource_type == Puppet::Type.type(:file)
-      fail("#{name} only accepts strings and File[] references")
+      fail("#{name} only accepts strings and File[] references, #{value.to_s} is not valid")
     end
     value
   end
