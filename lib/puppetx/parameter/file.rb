@@ -18,7 +18,11 @@ class PuppetX::Parameter::File < Puppet::Parameter
   def unsafe_validate(value)
     fail("#{name} does not accept an array as input") if value.is_a? Array
 
-    if value.is_a? Puppet::Type::File and !accept_file_with_content?
+    if value_is_a? Puppet::Resource
+      @type = resource.catalog.resource(value.to_s)
+    end
+
+    if @type and @type.is_a? Puppet::Type.type(:file).class and !accept_file_with_content?
       fail("#{value} is managing content, #{name} will not overwrite") if value.to_hash[:content] or value.to_hash[:source]
     end
 
@@ -29,8 +33,8 @@ class PuppetX::Parameter::File < Puppet::Parameter
   # Incase someone Overrides `unsafe_validate` this is a second chance to fight off arrays
   def unsafe_munge(value)
     fail("{name} does not accept an array as input") if value.is_a? Array
-    if value.is_a? Puppet::Type::File
-      return value.to_hash[:path]
+    if value.is_a? Puppet::Resource and @type.is_a? Puppet::Type.type(:file).class
+      return @type.to_hash[:path]
     end
     value
   end
