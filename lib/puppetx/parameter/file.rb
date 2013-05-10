@@ -31,14 +31,14 @@ class PuppetX::Parameter::File < Puppet::Parameter
     fail("{name} does not accept an array as input") if value.is_a? Array
 
     if @ref.nil? and value.is_a? Puppet::Resource
-      @ref = resource.catalog.resource(value.to_s)
+      @ref = resource.catalog.resource(value.to_ref)
       if @ref.is_a? Puppet::Type.type(:file).class and !accept_file_with_content?
         fail("#{value} is managing content, #{name} will not overwrite") if value.to_hash[:content] or value.to_hash[:source]
       end
     end
 
     if @ref and @ref.is_a? Puppet::Type.type(:file).class
-      return @ref.to_hash[:path]
+      return @ref[:path]
     end
     value
   end
