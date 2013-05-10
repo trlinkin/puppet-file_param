@@ -18,7 +18,7 @@ class PuppetX::Parameter::File < Puppet::Parameter
   def unsafe_validate(value)
     fail("#{name} does not accept an array as input") if value.is_a? Array
 
-    if value_is_a? Puppet::Resource
+    if value.is_a? Puppet::Resource
       @type = resource.catalog.resource(value.to_s)
     end
 
