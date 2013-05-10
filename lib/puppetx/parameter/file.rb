@@ -34,9 +34,16 @@ class PuppetX::Parameter::File < Puppet::Parameter
       end
     end
 
+    # No need to validate path from File[] resource, it does its own validation
     if @ref
       return @ref[:path]
     end
+
+    # We are applying the catalog and cannot find the referenced resource
+    if value.is_a? Puppet::Resource and resource.catalog.applying?
+      fail("#{name} Cannot resolve reference #{value.to_s} to a valid path, no such resource present")
+    end
+
     value
   end
 end
